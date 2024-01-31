@@ -114,26 +114,22 @@ def find_client(cur, name=None, surname=None, email=None, phones=None):
             AND c.email LIKE %s AND p.number like %s
             """, (name, surname, email, phones))
     return cur.fetchall()
-
+#В данном блоке, ниже, проверяем работу функций.
 if __name__ == '__main__':
     with psycopg2.connect(database="client_db", user="postgres", password="bdlike45") as conn:
         with conn.cursor() as curs:
             delete_db(curs)
             create_db(curs)
-            print("БД создана")
+            print("База данных создана")
             #Добавляем клиентов
             print("Добавлен клиент id: ",
-                  add_client(curs, "Nick", "Fury",
-                             "123456@gmail.com",79961234567))
+                  add_client(curs, "Nick", "Fury", "123456@gmail.com",79961234567))
             print("Добавлен клиент id: ",
-                  add_client(curs, "jonn", "Snow",
-                                "123456@mail.ru", 79991234560))
+                  add_client(curs, "jonn", "Snow", "123456@mail.ru", 79991234560))
             print("Добавлен клиент id: ",
-                  add_client(curs, "Anna", "Vingrow",
-                                "654321@gmail.com", 79981234561))
+                  add_client(curs, "Anna", "Vingrow", "654321@gmail.com", 79981234561))
             print("Добавлен клиент id: ",
-                  add_client(curs, "Victor", "Gugo",
-                                "5555555@mail.ru", 79971234562))
+                  add_client(curs, "Victor", "Gugo", "5555555@mail.ru", 79971234562))
             print("Данные внесены в таблицы")
             curs.execute("""
                 SELECT c.id, c.name, c.surname, c.email, p.number FROM clients c
@@ -183,12 +179,10 @@ if __name__ == '__main__':
             pprint(find_client(curs, None, None, '654321@gmail.com'))
 
             print('Найденный клиент по имени, фамилии и email:')
-            pprint(find_client(curs, 'Jonn', 'Snow',
-                               '123456@mail.ru'))
+            pprint(find_client(curs, 'Jonn', 'Snow', '123456@mail.ru'))
 
             print('Найденный клиент по имени, фамилии, телефону и email:')
-            pprint(find_client(curs, 'Anna', 'Vingrow',
-                               '654321@gmail.com', '79981234561'))
+            pprint(find_client(curs, 'Anna', 'Vingrow', '654321@gmail.com', '79981234561'))
 
             print('Найденный клиент по имени, фамилии, телефону:')
             pprint(find_client(curs, None, None, None, '79961234567'))
